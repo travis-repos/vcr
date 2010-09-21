@@ -11,6 +11,7 @@ require 'vcr'
 require 'vcr/http_stubbing_adapters/webmock'
 require 'vcr/http_stubbing_adapters/fakeweb'
 require 'rspec'
+require 'timecop'
 
 # Ruby 1.9.1 has a different yaml serialization format.
 YAML_SERIALIZATION_VERSION = RUBY_VERSION == '1.9.1' ? '1.9.1' : 'not_1.9.1'

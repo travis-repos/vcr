@@ -250,3 +250,19 @@ end
 Given /the following files do not exist:/ do |files|
   check_file_presence(files.raw.map{|file_row| file_row[0]}, false)
 end
+
+Given /the "([^"]*)" directory does not exist/ do |dir|
+  check_directory_presence([dir], false)
+end
+
+Then /^the file "([^"]*)" should contain each of the following:$/ do |file, table|
+  table.raw.flatten.each do |string|
+    Then %Q{the file "#{file}" should contain "#{string}"}
+  end
+end
+
+Then /^the file "([^"]*)" should be identical to the file "([^"]*)"$/ do |actual, expected|
+  in_current_dir do
+    File.read(actual).should == File.read(expected)
+  end
+end

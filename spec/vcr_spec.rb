@@ -5,6 +5,13 @@ describe VCR do
     VCR.insert_cassette(:cassette_test)
   end
 
+  before(:each) do
+    # clear out any caching between test runs
+    described_class.instance_eval do
+      instance_variables.each { |ivar| remove_instance_variable(ivar) }
+    end
+  end
+
   describe '.insert_cassette' do
     it 'creates a new cassette' do
       insert_cassette.should be_instance_of(VCR::Cassette)
@@ -195,4 +202,38 @@ describe VCR do
       end
     end
   end
+
+  #describe '.log_http_to' do
+    #logging_dir = 'tmp/logging_dir'
+    #temp_dir logging_dir
+
+    #let(:main_file) { File.join(logging_dir, 'http_interactions.yml') }
+    #let(:timestamped_file) { main_file.gsub('.yml', '.2010-09-21_12-00-00.yml') }
+    #let(:example_http_interaction) { VCR::HTTPInteraction.new("request 1", "response 2") }
+
+    #around(:each) do |example|
+      #Timecop.freeze(Time.local(2010, 9, 21, 12), &example)
+    #end
+
+    #define_method(:setup_logging) do
+      #described_class.log_http_to(logging_dir)
+    #end
+
+    #it 'creates the log directory' do
+      #expect { setup_logging }.to change { File.exist?(logging_dir) }.from(false).to(true)
+      #File.should be_directory(logging_dir)
+    #end
+
+    #it 'causes recorded http interactions to be written directly to a timestamped yaml file' do
+      #setup_logging
+      #File.zero?(timestamped_file).should be_true
+      #described_class.record_http_interaction(example_http_interaction)
+      #YAML.load(File.read(timestamped_file)).should == [example_http_interaction]
+    #end
+
+    #it 'symlinks http_interactions.yml to the timestamped yaml file' do
+      #setup_logging
+      #File.readlink(main_file).should == timestamped_file
+    #end
+  #end
 end

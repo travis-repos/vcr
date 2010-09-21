@@ -1,6 +1,7 @@
+require 'fileutils'
 require 'vcr/cassette'
 require 'vcr/config'
-require 'vcr/cucumber_tags'
+require 'vcr/cucumber_tags' # TODO: only require this when cucumber tags are used...
 require 'vcr/deprecations'
 require 'vcr/internet_connection'
 require 'vcr/request_matcher'
@@ -66,11 +67,20 @@ module VCR
   end
 
   def record_http_interaction(interaction)
+    if @development_logger
+      @development_logger.log(interaction) and return
+    end
+
     return unless cassette = current_cassette
     return if http_stubbing_adapter.ignore_localhost? &&
       LOCALHOST_ALIASES.include?(URI.parse(interaction.uri).host)
 
     cassette.record_http_interaction(interaction)
+  end
+
+  def log_http_to(dir)
+    require 'vcr/development_logger'
+    @development_logger = DevelopmentLogger.new(dir)
   end
 
   private
