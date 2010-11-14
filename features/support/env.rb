@@ -26,5 +26,11 @@ elsif RUBY_PLATFORM == 'java'
   Before do
     set_env('RUBYOPT', '-I../../lib -rubygems')
   end
+
+  # start a nail gun server...
+  Thread.new do
+    system 'jruby --ng-server &'
+  end
+  sleep(0.25)
 end
 

@@ -7,6 +7,8 @@ Aruba::Api.module_eval do
   def run(cmd, fail_on_error=true)
     cmd = detect_ruby(cmd)
 
+    cmd.gsub!('ruby ', 'ruby --ng -I../../lib -rubygems ')
+
     stderr_file = Tempfile.new('cucumber')
     stderr_file.close
     in_current_dir do
