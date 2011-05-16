@@ -71,6 +71,7 @@ Feature: stub_with
       | :typhoeus | false          | false          | true            | false        |
       | :excon    | false          | false          | false           | true         |
 
+  @ci @announce
   Scenario Outline: Record and replay a request using each supported stubbing/http library combination
     Given a file named "stubbing_http_lib_combo.rb" with:
       """
