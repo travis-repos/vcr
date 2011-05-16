@@ -82,6 +82,7 @@ Feature: stub_with
         get('/') { ARGV[0] }
       end
 
+      puts "Using <stub_with> and <http_lib> (for #{ARGV[0]})..."
       puts "The response for request 1 was: #{response_body_for(:get, "http://localhost:7777/")}"
 
       require 'vcr'
