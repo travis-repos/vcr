@@ -9,3 +9,5 @@ rvm:
   - rbx
 env:
   - CI=true
+notifications:
+  disabled: true
